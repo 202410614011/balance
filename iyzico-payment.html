@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Güvenli Ödeme - İyzico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .payment-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .payment-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        .payment-header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .payment-body {
+            padding: 32px;
+        }
+        .order-info {
+            background: #f5f5f5;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        .order-info h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .order-number {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .order-amount {
+            font-size: 28px;
+            font-weight: 600;
+            color: #2a5298;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 12px;
+        }
+        .card-icons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .card-icon {
+            background: #f5f5f5;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .btn-pay {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 8px;
+        }
+        .btn-pay:hover {
+            transform: translateY(-2px);
+        }
+        .btn-pay:active {
+            transform: translateY(0);
+        }
+        .btn-cancel {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #666;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s;
+        }
+        .btn-cancel:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+        .security-info {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        .demo-notice {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #856404;
+        }
+        .demo-notice strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #533f03;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        .loader.active {
+            display: block;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2a5298;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1>🔒 Güvenli Ödeme</h1>
+            <div class="security-badge">
+                🛡️ 256-bit SSL Şifreleme
+            </div>
+        </div>
+
+        <div class="payment-body">
+            <div class="demo-notice">
+                <strong>⚠️ DEMO MODU</strong>
+                Bu simülasyon sayfasıdır. Gerçek ödeme için:
+                <ul style="margin-top: 8px; margin-left: 20px;">
+                    <li>İyzico hesabı açın (<a href="https://www.iyzico.com" target="_blank">iyzico.com</a>)</li>
+                    <li>Backend server kurun (Node.js/PHP)</li>
+                    <li>API anahtarlarını entegre edin</li>
+                </ul>
+            </div>
+
+            <div class="order-info">
+                <h3>Sipariş Bilgileri</h3>
+                <div class="order-number" id="order-number">-</div>
+                <div class="order-amount" id="order-amount">-</div>
+            </div>
+
+            <div id="payment-form">
+                <div class="form-group">
+                    <label>Kart Üzerindeki İsim</label>
+                    <input type="text" id="card-name" placeholder="AHMET YILMAZ" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Kart Numarası</label>
+                    <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    <div class="card-icons">
+                        <span class="card-icon">💳 VISA</span>
+                        <span class="card-icon">💳 MasterCard</span>
+                        <span class="card-icon">💳 Troy</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Son Kullanma Tarihi</label>
+                        <input type="text" id="card-expiry" placeholder="AA/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" id="card-cvv" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+
+                <button class="btn-pay" onclick="processPayment()">
+                    🔐 Ödemeyi Tamamla
+                </button>
+
+                <button class="btn-cancel" onclick="cancelPayment()">
+                    ❌ İptal Et
+                </button>
+            </div>
+
+            <div class="loader" id="loader">
+                <div class="spinner"></div>
+                <p style="color: #2a5298; font-weight: 600;">Ödemeniz işleniyor...</p>
+                <p style="font-size: 14px; color: #666; margin-top: 8px;">Lütfen bekleyiniz</p>
+            </div>
+
+            <div class="security-info">
+                🔒 Kart bilgileriniz 256-bit SSL şifreleme ile korunur.<br>
+                Bilgileriniz sunucularımızda saklanmaz.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URL'den sipariş ID'sini al
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+
+        // Bekleyen siparişi yükle
+        const pendingOrder = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
+
+        if (!pendingOrder.orderNumber || !orderId) {
+            alert('Geçersiz ödeme talebi!');
+            window.location.href = 'sepet.html';
+        }
+
+        // Sipariş bilgilerini göster
+        document.getElementById('order-number').textContent = pendingOrder.orderNumber;
+        document.getElementById('order-amount').textContent = formatPrice(pendingOrder.total);
+
+        function formatPrice(price) {
+            return price.toLocaleString('tr-TR') + ' TL';
+        }
+
+        // Kart numarası formatlama
+        document.getElementById('card-number').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+
+        // Son kullanma tarihi formatlama
+        document.getElementById('card-expiry').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // CVV sadece rakam
+        document.getElementById('card-cvv').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        function processPayment() {
+            // Form validasyonu
+            const cardName = document.getElementById('card-name').value.trim();
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+            const cardExpiry = document.getElementById('card-expiry').value;
+            const cardCvv = document.getElementById('card-cvv').value;
+
+            if (!cardName || cardNumber.length !== 16 || cardExpiry.length !== 5 || cardCvv.length !== 3) {
+                alert('Lütfen tüm kart bilgilerini eksiksiz doldurunuz!');
+                return;
+            }
+
+            // Loading göster
+            document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('loader').classList.add('active');
+
+            // GERÇEK ENTEGRASYON:
+            // Burada backend'e istek atılır
+            // Backend, İyzico API'sine ödeme isteği gönderir
+            // Sonuç döner: başarılı/başarısız
+
+            // DEMO: 3 saniye bekle ve başarılı say
+            setTimeout(() => {
+                // Ödeme başarılı, siparişi kaydet
+                pendingOrder.status = 'Onaylandı';
+                pendingOrder.paymentStatus = 'Ödeme Alındı';
+                pendingOrder.paymentDate = new Date().toISOString();
+
+                // Sipariş geçmişine ekle
+                let orderHistory = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+                orderHistory.unshift(pendingOrder);
+                localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+                // Bekleyen siparişi temizle
+                localStorage.removeItem('pendingOrder');
+                
+                // Sepeti temizle
+                localStorage.removeItem('cart');
+
+                // Başarı sayfasına yönlendir
+                window.location.href = 'siparis-basarili.html?data=' + encodeURIComponent(JSON.stringify(pendingOrder));
+            }, 3000);
+        }
+
+        function cancelPayment() {
+            if (confirm('Ödemeyi iptal etmek istediğinizden emin misiniz?')) {
+                localStorage.removeItem('pendingOrder');
+                window.location.href = 'Ödeme.html';
+            }
+        }
+
+        // Geri tuşuna basılınca uyar
+        window.addEventListener('beforeunload', function(e) {
+            if (document.getElementById('payment-form').style.display !== 'none') {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweatshirtler - BALANCE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-header {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        .main-nav a.active {
+            text-decoration: underline;
+            font-weight: 700;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 600;
+        }
+        .page-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 18px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-image {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .product-price {
+            font-size: 16px;
+            color: #888;
+            margin: 0;
+        }
+        .badge {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.25s ease;
+            padding: 16px;
+        }
+
+        .product-card:hover .card-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .size-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .size-btn {
+            background-color: #f5f5f5;
+            border: 2px solid #ddd;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .size-btn:hover {
+            border-color: #fff;
+            color: #222;
+        }
+
+        .size-btn.active {
+            background-color: #fff;
+            color: #222;
+            border-color: #fff;
+        }
+
+        .add-to-cart {
+            background-color: #fff;
+            color: #222;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .add-to-cart:hover {
+            background-color: #f2f2f2;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .main-footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto;
+        }
+        .main-footer a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">BALANCE</div>
+        <nav class="main-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="sweatsihtler.html" class="active">Sweatshirtler</a>
+            <a href="sepet.html">Sepetim</a>
+            <a href="siparislerim.html">Siparişlerim</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">Sweatshirt Koleksiyonu</h2>
+        <p class="page-subtitle">Yeni sezondan oversize ve grafik baskılı modeller.</p>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="Siyah Oversize.png" alt="Siyah Oversize Sweatshirt" class="product-image">
+                <span class="badge">Oversize Fit</span>
+                <p class="product-name">Siyah Oversize Sweatshirt</p>
+                <p class="product-price">600 TL</p>
+                <div class="card-overlay">
+                    <div class="size-selector">
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="M">M</button>
+                    </div>
+                    <button class="add-to-cart">Sepete Ekle</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="Beyaz Oversize.png" alt="Beyaz Oversize Sweatshirt" class="product-image">
+                <span class="badge">Oversize Fit</span>
+                <p class="product-name">Beyaz Oversize Sweatshirt</p>
+                <p class="product-price">600 TL</p>
+                <div class="card-overlay">
+                    <div class="size-selector">
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="M">M</button>
+                    </div>
+                    <button class="add-to-cart">Sepete Ekle</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="Siyah Sweatshirt el yazısı.jpg" alt="Siyah Sweatshirt El Yazısı" class="product-image">
+                <span class="badge">El Yazısı Baskı</span>
+                <p class="product-name">Siyah El Yazısı Sweatshirt</p>
+                <p class="product-price">600 TL</p>
+                <div class="card-overlay">
+                    <div class="size-selector">
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="M">M</button>
+                    </div>
+                    <button class="add-to-cart">Sepete Ekle</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="Beyaz Sweatshirt el yazısı.jpg" alt="Beyaz Sweatshirt El Yazısı" class="product-image">
+                <span class="badge">El Yazısı Baskı</span>
+                <p class="product-name">Beyaz El Yazısı Sweatshirt</p>
+                <p class="product-price">600 TL</p>
+                <div class="card-overlay">
+                    <div class="size-selector">
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="M">M</button>
+                    </div>
+                    <button class="add-to-cart">Sepete Ekle</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="Siyah Sweatshirt Terazi.jpg" alt="Siyah Sweatshirt Terazi" class="product-image">
+                <span class="badge">Terazi Koleksiyonu</span>
+                <p class="product-name">Siyah Terazi Sweatshirt</p>
+                <p class="product-price">600 TL</p>
+                <div class="card-overlay">
+                    <div class="size-selector">
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="M">M</button>
+                    </div>
+                    <button class="add-to-cart">Sepete Ekle</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="Beyaz Sweatshirt Terazi.jpg" alt="Beyaz Sweatshirt Terazi" class="product-image">
+                <span class="badge">Terazi Koleksiyonu</span>
+                <p class="product-name">Beyaz Terazi Sweatshirt</p>
+                <p class="product-price">600 TL</p>
+                <div class="card-overlay">
+                    <div class="size-selector">
+                        <button class="size-btn" data-size="L">L</button>
+                        <button class="size-btn" data-size="M">M</button>
+                    </div>
+                    <button class="add-to-cart">Sepete Ekle</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>Tüm Hakları Saklıdır. | Instagram: <a href="https://www.instagram.com/balance.wears/" target="_blank" rel="noopener noreferrer">balance.wears</a></p>
+    </footer>
+    <script>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        document.querySelectorAll('.product-card').forEach(card => {
+            const sizeButtons = card.querySelectorAll('.size-btn');
+            const addBtn = card.querySelector('.add-to-cart');
+
+            sizeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sizeButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            addBtn.addEventListener('click', () => {
+                const activeSize = card.querySelector('.size-btn.active');
+                if (!activeSize) {
+                    showToast('⚠ Lütfen beden seçiniz');
+                    return;
+                }
+
+                const productName = card.querySelector('.product-name').textContent;
+                const productPrice = parseInt(card.querySelector('.product-price').textContent);
+                const productImage = card.querySelector('.product-image').src;
+                const selectedBeden = activeSize.dataset.size;
+
+                const product = {
+                    id: Date.now() + Math.random(),
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    beden: selectedBeden,
+                    qty: 1
+                };
+
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                const existing = cart.find(p => p.name === productName && p.beden === selectedBeden);
+                if (existing) {
+                    existing.qty += 1;
+                } else {
+                    cart.push(product);
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                showToast(`✓ ${productName} (${selectedBeden}) sepete eklendi`);
+                sizeButtons.forEach(b => b.classList.remove('active'));
+            });
+        });
+    </script>
+</body>
+</html>

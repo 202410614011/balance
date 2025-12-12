@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödeme - BALANCE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-header {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 24px;
+        }
+        .checkout-section {
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 16px;
+            color: #222;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .order-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .order-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #eee;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        .order-item-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        .order-item-info {
+            flex: 1;
+        }
+        .order-item-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin: 0 0 4px;
+        }
+        .order-item-details {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+        .order-item-price {
+            font-weight: 600;
+            color: #222;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .summary-line.total {
+            font-size: 18px;
+            font-weight: 700;
+            color: #222;
+            border-top: 2px solid #eee;
+            padding-top: 12px;
+            margin-top: 14px;
+        }
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .payment-method {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .payment-method:hover {
+            border-color: #333;
+        }
+        .payment-method.active {
+            border-color: #333;
+            background: #f9f9f9;
+        }
+        .submit-btn {
+            width: 100%;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        .submit-btn:hover {
+            background: #555;
+        }
+        .main-footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto;
+        }
+        .main-footer a {
+            color: inherit;
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">BALANCE</div>
+        <nav class="main-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="sweatsihtler.html">Sweatshirtler</a>
+            <a href="sepet.html">Sepetim</a>
+            <a href="siparislerim.html">Siparişlerim</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">Ödeme Bilgileri</h2>
+
+        <div class="checkout-grid">
+            <div>
+                <div class="checkout-section">
+                    <h3 class="section-title">Teslimat Bilgileri</h3>
+                    <form id="checkout-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ad *</label>
+                                <input type="text" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Soyad *</label>
+                                <input type="text" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>E-posta *</label>
+                            <input type="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon *</label>
+                            <input type="tel" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Adres *</label>
+                            <textarea name="address" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Şehir *</label>
+                                <input type="text" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Posta Kodu *</label>
+                                <input type="text" name="zipCode" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="checkout-section" style="margin-top: 24px;">
+                    <h3 class="section-title">Ödeme Yöntemi</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method active" data-method="iyzico">
+                            💳 Kredi/Banka Kartı (İyzico)
+                        </div>
+                        <div class="payment-method" data-method="transfer">
+                            🏦 Havale/EFT
+                        </div>
+                    </div>
+                    
+                    <div id="iyzico-info">
+                        <div style="background: #e3f2fd; padding: 16px; border-radius: 8px; margin-top: 16px; border-left: 4px solid #2196F3;">
+                            <p style="margin: 0; font-size: 14px; color: #1565c0;">
+                                <strong>🔒 Güvenli Ödeme</strong><br>
+                                Ödemeniz İyzico güvencesiyle 256-bit SSL şifreleme ile korunmaktadır.
+                                Kart bilgileriniz sunucularımızda saklanmaz.
+                            </p>
+                        </div>
+                        <div style="margin-top: 16px; padding: 12px; background: #fff3cd; border-radius: 8px; font-size: 13px; color: #856404;">
+                            ⚠️ <strong>Demo Modu:</strong> Gerçek ödeme entegrasyonu için İyzico hesabı ve backend server gereklidir.
+                        </div>
+                    </div>
+
+                    <div id="transfer-info" style="display: none;">
+                        <div style="background: #f9f9f9; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                            <p style="margin: 0 0 12px; font-weight: 600;">Banka Hesap Bilgileri:</p>
+                            <p style="margin: 4px 0; font-size: 14px;"><strong>Banka:</strong> Örnek Banka</p>
+                            <p style="margin: 4px 0; font-size: 14px;"><strong>IBAN:</strong> TR00 0000 0000 0000 0000 0000 00</p>
+                            <p style="margin: 4px 0; font-size: 14px;"><strong>Alıcı:</strong> BALANCE TİCARET LTD. ŞTİ.</p>
+                            <p style="margin: 12px 0 0; font-size: 13px; color: #666;">
+                                Açıklama kısmına sipariş numaranızı yazınız.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="order-summary">
+                    <h3 class="section-title">Sipariş Özeti</h3>
+                    <div id="order-items">
+                        <!-- Dinamik olarak dolacak -->
+                    </div>
+                    <div class="summary-line">
+                        <span>Ara Toplam:</span>
+                        <span id="summary-subtotal">0 TL</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Kargo:</span>
+                        <span>Ücretsiz</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>TOPLAM:</span>
+                        <span id="summary-total">0 TL</span>
+                    </div>
+                    <button class="submit-btn" onclick="completeOrder()">Siparişi Tamamla</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>Tüm Hakları Saklıdır. | Instagram: <a href="https://www.instagram.com/balance.wears/" target="_blank" rel="noopener noreferrer">balance.wears</a></p>
+    </footer>
+
+    <script>
+        function formatPrice(num) {
+            return num.toLocaleString('tr-TR') + ' TL';
+        }
+
+        function loadOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const orderItemsDiv = document.getElementById('order-items');
+            
+            if (cart.length === 0) {
+                window.location.href = 'sepet.html';
+                return;
+            }
+
+            let subtotal = 0;
+            orderItemsDiv.innerHTML = '';
+
+            cart.forEach(product => {
+                const itemTotal = product.price * product.qty;
+                subtotal += itemTotal;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'order-item';
+                itemDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="order-item-img">
+                    <div class="order-item-info">
+                        <p class="order-item-name">${product.name}</p>
+                        <p class="order-item-details">Beden: ${product.beden} • Adet: ${product.qty}</p>
+                    </div>
+                    <div class="order-item-price">${formatPrice(itemTotal)}</div>
+                `;
+                orderItemsDiv.appendChild(itemDiv);
+            });
+
+            document.getElementById('summary-subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('summary-total').textContent = formatPrice(subtotal);
+        }
+
+        // Ödeme yöntemi seçimi
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+                this.classList.add('active');
+                
+                const iyzicoInfo = document.getElementById('iyzico-info');
+                const transferInfo = document.getElementById('transfer-info');
+                
+                if (this.dataset.method === 'iyzico') {
+                    iyzicoInfo.style.display = 'block';
+                    transferInfo.style.display = 'none';
+                } else {
+                    iyzicoInfo.style.display = 'none';
+                    transferInfo.style.display = 'block';
+                }
+            });
+        });
+
+        function completeOrder() {
+            const form = document.getElementById('checkout-form');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const activeMethod = document.querySelector('.payment-method.active');
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            if (cart.length === 0) {
+                alert('Sepetiniz boş!');
+                window.location.href = 'sweatsihtler.html';
+                return;
+            }
+
+            // İyzico ödeme seçiliyse gerçek ödeme akışını başlat
+            if (activeMethod.dataset.method === 'iyzico') {
+                initiateIyzicoPayment();
+                return;
+            }
+
+            // Havale/EFT için normal akış
+            processTransferOrder();
+        }
+
+        function initiateIyzicoPayment() {
+            const form = document.getElementById('checkout-form');
+            const formData = new FormData(form);
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            let total = 0;
+            cart.forEach(p => total += p.price * p.qty);
+
+            // Loading göster
+            const btn = document.querySelector('.btn-complete');
+            const originalText = btn.textContent;
+            btn.textContent = '🔄 Ödeme sayfasına yönlendiriliyor...';
+            btn.disabled = true;
+
+            // Sipariş bilgilerini hazırla
+            const orderData = {
+                orderNumber: 'BLC' + Date.now().toString().slice(-8),
+                orderDate: new Date().toISOString(),
+                itemCount: cart.reduce((sum, p) => sum + p.qty, 0),
+                total: total,
+                items: cart.map(p => ({
+                    name: p.name,
+                    price: p.price,
+                    qty: p.qty,
+                    beden: p.beden,
+                    image: p.image
+                })),
+                customer: {
+                    firstName: formData.get('firstName'),
+                    lastName: formData.get('lastName'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    address: formData.get('address'),
+                    city: formData.get('city'),
+                    zipCode: formData.get('zipCode')
+                },
+                paymentMethod: 'İyzico - Kredi Kartı',
+                status: 'Beklemede',
+                paymentStatus: 'Ödeme Bekleniyor'
+            };
+
+            // Geçici olarak localStorage'a kaydet
+            localStorage.setItem('pendingOrder', JSON.stringify(orderData));
+
+            // Gerçek entegrasyonda burası backend'e istek atılır
+            // Backend, İyzico'ya ödeme talebi oluşturur ve payment URL döner
+            // Kullanıcı İyzico sayfasına yönlendirilir
+            
+            // DEMO AMAÇLI: Simülasyon sayfasına yönlendir
+            setTimeout(() => {
+                window.location.href = 'iyzico-payment.html?orderId=' + orderData.orderNumber;
+            }, 1500);
+        }
+
+        function processTransferOrder() {
+            const form = document.getElementById('checkout-form');
+            const formData = new FormData(form);
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const activeMethod = document.querySelector('.payment-method.active');
+            
+            let total = 0;
+            cart.forEach(p => total += p.price * p.qty);
+            
+            const orderData = {
+                orderNumber: 'BLC' + Date.now().toString().slice(-8),
+                orderDate: new Date().toISOString(),
+                itemCount: cart.reduce((sum, p) => sum + p.qty, 0),
+                total: total,
+                items: cart.map(p => ({
+                    name: p.name,
+                    price: p.price,
+                    qty: p.qty,
+                    beden: p.beden,
+                    image: p.image
+                })),
+                customer: {
+                    firstName: formData.get('firstName'),
+                    lastName: formData.get('lastName'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    address: formData.get('address'),
+                    city: formData.get('city'),
+                    zipCode: formData.get('zipCode')
+                },
+                paymentMethod: 'Havale/EFT',
+                status: 'Beklemede',
+                paymentStatus: 'Havale Bekleniyor'
+            };
+
+            // Sipariş geçmişine ekle
+            let orderHistory = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+            orderHistory.unshift(orderData);
+            localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+            // Sepeti temizle
+            localStorage.removeItem('cart');
+            
+            // Sipariş başarılı sayfasına yönlendir
+            window.location.href = 'siparis-basarili.html?data=' + encodeURIComponent(JSON.stringify(orderData));
+        }
+
+        loadOrderSummary();
+    </script>
+</body>
+</html>

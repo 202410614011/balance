@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepetim - BALANCE</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-header {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        .main-nav a.active {
+            text-decoration: underline;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .cart-table thead th {
+            background-color: #f9f9f9;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+        }
+
+        .cart-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .qty-input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            background-color: #ff5252;
+        }
+
+        .cart-summary {
+            max-width: 350px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-left: auto;
+        }
+
+        .cart-summary h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .summary-line.total {
+            font-weight: 700;
+            color: #333;
+            border-top: 2px solid #eee;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .checkout-button {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        .checkout-button:hover {
+            background-color: #555;
+        }
+
+        .main-footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">BALANCE</div>
+        <nav class="main-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="sweatsihtler.html">Sweatshirtler</a>
+            <a href="sepet.html" class="active">Sepetim</a>
+            <a href="siparislerim.html">Siparişlerim</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2 class="page-title">Sepetim</h2>
+
+        <div style="display: flex; gap: 30px;">
+            <div style="flex: 1;">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Ürün</th>
+                            <th>Beden</th>
+                            <th>Adet</th>
+                            <th>Fiyat</th>
+                            <th>Toplam</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-body">
+                        <!-- Ürünler buraya dinamik olarak eklenir -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cart-summary">
+                <h3>Sepet Özeti</h3>
+                <div class="summary-line">
+                    <span>Ara Toplam:</span>
+                    <span id="subtotal">1950 TL</span>
+                </div>
+                <div class="summary-line">
+                    <span>Kargo:</span>
+                    <span>Ücretsiz</span>
+                </div>
+                <div class="summary-line total">
+                    <span>GENEL TOPLAM:</span>
+                    <span id="grand-total">1950 TL</span>
+                </div>
+                <button class="checkout-button" onclick="window.location.href='Ödeme.html'">ÖDEMEYE GEÇ</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>Tüm Hakları Saklıdır. | İletişim: balance@gmail.com</p>
+    </footer>
+
+    <script>
+        (function() {
+            const cartBody = document.getElementById('cart-body');
+            const subtotalEl = document.getElementById('subtotal');
+            const grandTotalEl = document.getElementById('grand-total');
+
+            function formatPrice(num) {
+                return num.toLocaleString('tr-TR') + ' TL';
+            }
+
+            function loadCart() {
+                const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                cartBody.innerHTML = '';
+                
+                if (cart.length === 0) {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.textContent = 'Sepetiniz boş. Ürün eklemek için Ana Sayfa\'ya gidin.';
+                    emptyDiv.style.cssText = 'padding: 40px; text-align: center; color: #666; grid-column: 1/-1;';
+                    cartBody.closest('table').parentElement.appendChild(emptyDiv);
+                    cartBody.closest('table').style.display = 'none';
+                    document.querySelector('.cart-summary').style.display = 'none';
+                    return;
+                }
+                
+                cartBody.closest('table').style.display = 'table';
+                document.querySelector('.cart-summary').style.display = 'block';
+                
+                cart.forEach((product, idx) => {
+                    const row = document.createElement('tr');
+                    row.dataset.id = product.id;
+                    row.dataset.price = product.price;
+                    row.dataset.qty = product.qty;
+                    row.innerHTML = `
+                        <td class="product-info">
+                            <img src="${product.image}" alt="${product.name}" class="product-image">
+                            <span>${product.name}</span>
+                        </td>
+                        <td>${product.beden || '-'}</td>
+                        <td>${product.qty}</td>
+                        <td class="unit-price">${formatPrice(product.price)}</td>
+                        <td class="row-total">${formatPrice(product.price * product.qty)}</td>
+                        <td><button class="remove-btn">Sil</button></td>
+                    `;
+                    cartBody.appendChild(row);
+                });
+                
+                updateTotals();
+            }
+
+            function updateTotals() {
+                let subtotal = 0;
+
+                cartBody.querySelectorAll('tr').forEach(row => {
+                    const price = Number(row.dataset.price);
+                    const qty = Number(row.dataset.qty);
+                    const rowTotal = price * qty;
+
+                    row.querySelector('.row-total').textContent = formatPrice(rowTotal);
+                    subtotal += rowTotal;
+                });
+
+                subtotalEl.textContent = formatPrice(subtotal);
+                const shipping = 0;
+                const grandTotal = subtotal + shipping;
+                grandTotalEl.textContent = formatPrice(grandTotal);
+            }
+
+            // Adet input'u değiştiğinde
+            cartBody.addEventListener('input', function(e) {
+                if (e.target.classList.contains('qty-input')) {
+                    updateTotals();
+                }
+            });
+
+            // Sil butonu
+            cartBody.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-btn')) {
+                    const row = e.target.closest('tr');
+                    const productId = row.dataset.id;
+                    
+                    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                    cart = cart.filter(p => p.id != productId);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    
+                    row.remove();
+                    
+                    if (cart.length === 0) {
+                        loadCart();
+                    } else {
+                        updateTotals();
+                    }
+                }
+            });
+
+            // Başlangıç
+            loadCart();
+        })();
+    </script>
+</body>
+</html>

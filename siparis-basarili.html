@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sipariş Başarılı - BALANCE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-header {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        .success-card {
+            background: white;
+            border-radius: 16px;
+            padding: 48px 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            animation: scaleIn 0.5s ease;
+        }
+        .success-icon::after {
+            content: "✓";
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+        .success-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #222;
+            margin: 0 0 12px;
+        }
+        .success-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin: 0 0 32px;
+            line-height: 1.6;
+        }
+        .order-number {
+            background: #f9f9f9;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 24px 0;
+        }
+        .order-number-label {
+            font-size: 14px;
+            color: #888;
+            margin: 0 0 6px;
+        }
+        .order-number-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+        .order-details {
+            text-align: left;
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+        .detail-value {
+            color: #222;
+            font-weight: 600;
+        }
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        .info-box p {
+            margin: 0;
+            color: #2e7d32;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #333;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #555;
+        }
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+        .btn-secondary:hover {
+            border-color: #333;
+        }
+        .main-footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto;
+        }
+        .main-footer a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">BALANCE</div>
+    </header>
+
+    <main class="container">
+        <div class="success-card">
+            <div class="success-icon"></div>
+            <h1 class="success-title">Siparişiniz Alındı!</h1>
+            <p class="success-subtitle">
+                Siparişiniz başarıyla oluşturuldu. Kısa süre içerisinde e-posta adresinize sipariş detaylarını göndereceğiz.
+            </p>
+
+            <div class="order-number">
+                <p class="order-number-label">Sipariş Numaranız</p>
+                <p class="order-number-value" id="order-number">-</p>
+            </div>
+
+            <div class="order-details">
+                <div class="detail-row">
+                    <span class="detail-label">Sipariş Tarihi:</span>
+                    <span class="detail-value" id="order-date">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Ürün Adedi:</span>
+                    <span class="detail-value" id="item-count">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Toplam Tutar:</span>
+                    <span class="detail-value" id="order-total">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Teslimat Adresi:</span>
+                    <span class="detail-value" id="delivery-address">-</span>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <p>
+                    <strong>📦 Kargolama Bilgisi:</strong><br>
+                    Siparişiniz 1-2 iş günü içerisinde kargoya teslim edilecektir. 
+                    Kargo takip numaranız e-posta ile tarafınıza iletilecektir.
+                </p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="index.html" class="btn btn-primary">Ana Sayfaya Dön</a>
+                <a href="sweatsihtler.html" class="btn btn-secondary">Alışverişe Devam Et</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>Tüm Hakları Saklıdır. | Instagram: <a href="https://www.instagram.com/balance.wears/" target="_blank" rel="noopener noreferrer">balance.wears</a></p>
+    </footer>
+
+    <script>
+        function formatPrice(num) {
+            return num.toLocaleString('tr-TR') + ' TL';
+        }
+
+        function generateOrderNumber() {
+            return 'BLC' + Date.now().toString().slice(-8);
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('tr-TR', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // URL'den sipariş bilgilerini al
+        const params = new URLSearchParams(window.location.search);
+        const orderData = params.get('data');
+
+        if (orderData) {
+            try {
+                const data = JSON.parse(decodeURIComponent(orderData));
+                
+                document.getElementById('order-number').textContent = data.orderNumber;
+                document.getElementById('order-date').textContent = formatDate(new Date());
+                document.getElementById('item-count').textContent = data.itemCount + ' adet';
+                document.getElementById('order-total').textContent = formatPrice(data.total);
+                document.getElementById('delivery-address').textContent = 
+                    data.city + ', ' + data.address.substring(0, 50) + '...';
+            } catch (e) {
+                console.error('Sipariş verileri yüklenemedi');
+            }
+        } else {
+            // Veriler yoksa ana sayfaya yönlendir
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
